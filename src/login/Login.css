@@ -1,0 +1,52 @@
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    color: white;
+    text-align: center;
+  }
+  
+  .login-h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .login-h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .google:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.05);
+  }
+  
+  .google-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .google-btn:hover {
+    color: #007bff;
+  }
+  

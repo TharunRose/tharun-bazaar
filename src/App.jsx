@@ -1,26 +1,32 @@
 import React from 'react';
-import RecipeList from './components/RecipeList';
-import Favorites from './components/Favorites';
-import SearchBar from './components/SearchBar';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import './App.css'
+import Login from './login/Login';
+import List from './List';
+import Board from './Board';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import TaskDashboard from './TaskDashboard';
+
+
 
 const App = () => {
   return (
-    <div>
-      <Provider store={store} >
+    <div  className='app-box'>
+     
+     
+      
         <BrowserRouter>
 
           <Routes>
-            <Route path='' element={<RecipeList />} />
-            <Route path='/fav' element={<Favorites />} />
+            <Route path='/' element={<Login />} />
+            <Route path='/list' element={<List />} />
+            {/* <Route path='/board' element={<Board />} /> */}
+            <Route path='/task' element={<TaskDashboard />} />
           </Routes>
 
 
 
         </BrowserRouter>
-      </Provider>
+      
     </div>
   );
 };
