@@ -12,7 +12,7 @@ const Login = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        navigate("/task");
+        navigate("/home");
       }
     });
 
@@ -22,18 +22,25 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await signInWithPopup(auth, provider);
-      navigate("/task");
+      navigate("/home");
     } catch (error) {
       console.error("Login Error:", error);
     }
   };
 
   return (
-    <div className="container min-w-screen">
-      <h1 className="login-h1">Task Management</h1>
-      <h2 className="login-h2">Login</h2>
-      <div className="google">
-        <button className="google-btn" onClick={handleLogin}>Sign in with Google</button>
+    <div className="login-container">
+      <div className="login-box">
+        <h1 className="login-title">Tharun Bazaar</h1>
+        <p className="login-tagline">
+          Your one-stop shop for the best deals and seamless shopping experience.
+        </p>
+        <h2 className="login-subtitle">Login</h2>
+        <div className="google">
+          <button className="google-btn" onClick={handleLogin}>
+            Sign in with Google
+          </button>
+        </div>
       </div>
     </div>
   );
