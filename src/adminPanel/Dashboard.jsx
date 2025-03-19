@@ -1,32 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { db, auth } from "./firebase";
+import { db, auth } from "../firebase";
 import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-const MyOrders = () => {
+const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        fetchOrders(currentUser.uid);
-      } else {
-        setLoading(false);
-      }
-    });
+  
+        fetchOrders();
+      
 
-    return () => unsubscribe();
+  
   }, []);
 
-  const fetchOrders = async (userId) => {
+  const fetchOrders = async () => {
     try {
       const ordersRef = collection(db, "orders");
-      const q = query(ordersRef, where("userId", "==", userId));
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(ordersRef); // Fetch orders
 
+  
+  
       const ordersList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -40,17 +36,17 @@ const MyOrders = () => {
     }
   };
 
-  const cancelOrder = async (orderId) => {
+  const UpdateOrderStatus = async (orderId) => {
     try {
       const orderRef = doc(db, "orders", orderId);
-      await updateDoc(orderRef, { status: "Cancelled" });
+      await updateDoc(orderRef, { status: "Confirmed Order" });
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
-          order.id === orderId ? { ...order, status: "Cancelled" } : order
+          order.id === orderId ? { ...order, status: "Confirmed Order" } : order
         )
       );
     } catch (error) {
-      console.error("Error cancelling order:", error);
+      console.error("Error Confirm  order:", error);
     }
   };
 
@@ -58,13 +54,13 @@ const MyOrders = () => {
     return <p style={styles.loading}>Loading orders...</p>;
   }
 
-  if (!user) {
-    return <p style={styles.error}>Error: User is null. Please log in.</p>;
-  }
+//   if (!user) {
+//     return <p style={styles.error}>Error: User is null. Please log in.</p>;
+//   }
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>My Orders</h2>
+      <h2 style={styles.heading}>Orders</h2>
       {orders.length === 0 ? (
         <p style={styles.noOrders}>No orders found</p>
       ) : (
@@ -88,9 +84,9 @@ const MyOrders = () => {
                   ))}
                 </ul>
               </div>
-              {order.status !== "Cancelled" && order.status !== "Confirmed Order" &&  (
-                <button style={styles.cancelButton} onClick={() => cancelOrder(order.id)}>
-                  Cancel Order
+              {order.status !== "Cancelled" &&  order.status !== "Confirmed Order" &&  (
+                <button style={styles.cancelButton} onClick={() => UpdateOrderStatus(order.id)}>
+                  Confirm Order
                 </button>
               )}
             </div>
@@ -167,7 +163,7 @@ const styles = {
     justifyContent: "space-between",
   },
   cancelButton: {
-    background: "red",
+    background: "green",
     color: "white",
     padding: "8px 12px",
     border: "none",
@@ -177,4 +173,4 @@ const styles = {
   },
 };
 
-export default MyOrders;
+export default Dashboard;

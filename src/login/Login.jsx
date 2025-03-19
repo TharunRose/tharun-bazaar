@@ -28,17 +28,28 @@ const Login = () => {
     }
   };
 
+  const adminLogin = async () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
         <h1 className="login-title">Tharun Bazaar</h1>
         <p className="login-tagline">
-          Your one-stop shop for the best deals and seamless shopping experience.
+          Your one-stop shop for the best deals and seamless shopping
+          experience.
         </p>
         <h2 className="login-subtitle">Login</h2>
         <div className="google">
           <button className="google-btn" onClick={handleLogin}>
             Sign in with Google
+          </button>
+        </div>
+        <br />
+        <div className="google">
+          <button className="google-btn" onClick={adminLogin}>
+            Admin Login
           </button>
         </div>
       </div>

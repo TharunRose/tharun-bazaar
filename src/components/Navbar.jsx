@@ -53,30 +53,51 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
-          {!user && (
+          {/* Show login link only when user is NOT logged in AND on /dashboard */}
+          {!user && !location.pathname === "/dashboard" && (
             <li>
-              <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>
+              <Link
+                to="/"
+                className="nav-link"
+                onClick={() => setIsOpen(false)}
+              >
                 Login
               </Link>
             </li>
           )}
+
+          {/* Show Home & My Orders only when user is logged in */}
+          {user &&
+            (location.pathname === "/home" ||
+              location.pathname === "/myorders") && (
+              <>
+                <li>
+                  <Link
+                    to="/home"
+                    className="nav-link"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/myorders"
+                    className="nav-link"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    My Orders
+                  </Link>
+                </li>
+              </>
+            )}
+
+          {/* Logout button should only appear if user is logged in */}
           <li>
-            <Link to="/home" className="nav-link" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </li>
-          <li>
-            <Link to="/myorders" className="nav-link" onClick={() => setIsOpen(false)}>
-              My Orders
-            </Link>
-          </li>
-          {user && (
-            <li>
-              <button className="logout-btn" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-          )}
         </ul>
       </div>
     </nav>
